@@ -66,7 +66,7 @@ const Header = () => {
 
     return (
         <header className="bg-white dark:bg-gray-800 shadow-md px-6 py-4 flex justify-between items-center z-10 w-full">
-            <Link to="/" className="text-2xl font-bold text-primary">
+            <Link to="/" className="text-2xl font-bold text-primary ">
                 Job Board
             </Link>
 

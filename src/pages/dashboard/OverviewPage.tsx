@@ -54,6 +54,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
+// Chart imports
+import SimplePieChart from "@/components/charts/SimplePieChart";
+import SimpleLineChart from "@/components/charts/SimpleLineChart";
+import SimpleBarChart from "@/components/charts/SimpleBarChart";
+
 // Define form schema
 const formSchema = z.object({
     username: z.string().min(3, {
@@ -485,6 +490,11 @@ const OverviewPage = () => {
                     </form>
                 </CardContent>
             </Card>
+
+            {/* Chart Cards */}
+            <SimplePieChart />
+            <SimpleLineChart />
+            <SimpleBarChart />
         </div>
     );
 };
