@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "@/store/useAuthStore";
 import NotificationBell from "./NotificationBell";
+import { Button } from "@/components/ui/button"; // Import Button component
+import { useTheme } from "@/hooks/useTheme"; // Import useTheme hook
 
 const Header = () => {
     const { isAuthenticated, logout, user } = useAuthStore();
+    const { theme, toggleTheme } = useTheme(); // Use the theme hook
 
     const getDashboardPath = () => {
         if (!user) return "/";
@@ -100,6 +103,16 @@ const Header = () => {
                         Login
                     </Link>
                 )}
+
+                {/* Dark Mode Toggle Button */}
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={toggleTheme}
+                    className="ml-4"
+                >
+                    {theme === "light" ? "Dark Mode" : "Light Mode"}
+                </Button>
             </div>
         </header>
     );

@@ -49,8 +49,45 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/useToast";
 
+// React Hook Form and Zod imports
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+// Define form schema
+const formSchema = z.object({
+    username: z.string().min(3, {
+        message: "Username must be at least 3 characters.",
+    }),
+    email: z.string().email({
+        message: "Invalid email address.",
+    }),
+});
+
 const OverviewPage = () => {
     const toast = useToast();
+
+    // React Hook Form setup
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            username: "",
+            email: "",
+        },
+    });
+
+    // Form submission handler
+    const onSubmit = (values: z.infer<typeof formSchema>) => {
+        console.log(values);
+        toast("success", "Form submitted successfully!");
+        reset(); // Reset form after successful submission
+    };
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
             <Card>
@@ -91,16 +128,28 @@ const OverviewPage = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Button onClick={() => toast("error", "error")}>
+                    <Button
+                        variant="default"
+                        onClick={() => toast("error", "error")}
+                    >
                         Button
                     </Button>
-                    <Button onClick={() => toast("success", "error")}>
+                    <Button
+                        variant="destructive"
+                        onClick={() => toast("success", "error")}
+                    >
                         Button
                     </Button>
-                    <Button onClick={() => toast("warning", "error")}>
+                    <Button
+                        variant="link"
+                        onClick={() => toast("warning", "error")}
+                    >
                         Button
                     </Button>
-                    <Button onClick={() => toast("info", "error")}>
+                    <Button
+                        variant="secondary"
+                        onClick={() => toast("info", "error")}
+                    >
                         Button
                     </Button>
                 </CardContent>
@@ -152,7 +201,7 @@ const OverviewPage = () => {
                                     </Label>
                                     <Input
                                         id="name"
-                                        value="Pedro Duarte"
+                                        value="Pedro"
                                         className="col-span-3"
                                     />
                                 </div>
@@ -383,6 +432,57 @@ const OverviewPage = () => {
                 </CardHeader>
                 <CardContent>
                     <Textarea placeholder="Type your message here." />
+                </CardContent>
+            </Card>
+
+            {/* New Form Card */}
+            <Card className="w-full max-w-md col-span-full mx-auto mt-8">
+                <CardHeader>
+                    <CardTitle>Simple Form with React Hook Form</CardTitle>
+                    <CardDescription>
+                        Demonstrates form handling and validation using React
+                        Hook Form and Zod.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="space-y-4"
+                    >
+                        <div>
+                            <Label htmlFor="username">Username</Label>
+                            <Input
+                                id="username"
+                                type="text"
+                                {...register("username")}
+                                className={
+                                    errors.username ? "border-red-500" : ""
+                                }
+                            />
+                            {errors.username && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.username.message}
+                                </p>
+                            )}
+                        </div>
+                        <div>
+                            <Label htmlFor="email">Email</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                {...register("email")}
+                                className={errors.email ? "border-red-500" : ""}
+                            />
+                            {errors.email && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.email.message}
+                                </p>
+                            )}
+                        </div>
+                        <Button type="submit" className="w-full">
+                            Submit
+                        </Button>
+                    </form>
                 </CardContent>
             </Card>
         </div>
