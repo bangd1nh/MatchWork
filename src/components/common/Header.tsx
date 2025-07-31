@@ -3,10 +3,12 @@ import { useAuthStore } from "@/store/useAuthStore";
 import NotificationBell from "./NotificationBell";
 import { Button } from "@/components/ui/button"; // Import Button component
 import { useTheme } from "@/hooks/useTheme"; // Import useTheme hook
+import { useTranslation } from 'react-i18next'; // Import useTranslation hook
 
 const Header = () => {
     const { isAuthenticated, logout, user } = useAuthStore();
     const { theme, toggleTheme } = useTheme(); // Use the theme hook
+    const { t } = useTranslation(); // Use the translation hook
 
     const getDashboardPath = () => {
         if (!user) return "/";
@@ -30,10 +32,10 @@ const Header = () => {
                 return (
                     <>
                         <Link to="#" className="nav-link">
-                            Manage Users
+                            {t("manage_users")}
                         </Link>
                         <Link to="#" className="nav-link">
-                            View Reports
+                            {t("view_reports")}
                         </Link>
                     </>
                 );
@@ -41,10 +43,10 @@ const Header = () => {
                 return (
                     <>
                         <Link to="#" className="nav-link">
-                            Post a Job
+                            {t("post_a_job")}
                         </Link>
                         <Link to="#" className="nav-link">
-                            My Jobs
+                            {t("my_jobs")}
                         </Link>
                     </>
                 );
@@ -52,10 +54,10 @@ const Header = () => {
                 return (
                     <>
                         <Link to="#" className="nav-link">
-                            Find Jobs
+                            {t("find_jobs")}
                         </Link>
                         <Link to="#" className="nav-link">
-                            My Applications
+                            {t("my_applications")}
                         </Link>
                     </>
                 );
@@ -67,7 +69,7 @@ const Header = () => {
     return (
         <header className="bg-white dark:bg-gray-800 shadow-md px-6 py-4 flex justify-between items-center z-10 w-full">
             <Link to="/" className="text-2xl font-bold text-primary ">
-                Job Board
+                {t("job_board")}
             </Link>
 
             <nav className="flex-1 ml-10">
@@ -83,14 +85,14 @@ const Header = () => {
                             to={getDashboardPath()}
                             className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                         >
-                            Dashboard
+                            {t("dashboard")}
                         </Link>
                         <NotificationBell />
                         <button
                             onClick={logout}
                             className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                         >
-                            Logout
+                            {t("logout")}
                         </button>
                     </>
                 )}
@@ -100,7 +102,7 @@ const Header = () => {
                         to="/login"
                         className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                     >
-                        Login
+                        {t("login")}
                     </Link>
                 )}
 
@@ -111,7 +113,7 @@ const Header = () => {
                     onClick={toggleTheme}
                     className="ml-4"
                 >
-                    {theme === "light" ? "Dark Mode" : "Light Mode"}
+                    {theme === "light" ? t("dark_mode") : t("light_mode")}
                 </Button>
             </div>
         </header>

@@ -59,18 +59,22 @@ import SimplePieChart from "@/components/charts/SimplePieChart";
 import SimpleLineChart from "@/components/charts/SimpleLineChart";
 import SimpleBarChart from "@/components/charts/SimpleBarChart";
 
-// Define form schema
-const formSchema = z.object({
-    username: z.string().min(3, {
-        message: "Username must be at least 3 characters.",
-    }),
-    email: z.string().email({
-        message: "Invalid email address.",
-    }),
-});
+// i18n import
+import { useTranslation } from 'react-i18next';
 
 const OverviewPage = () => {
     const toast = useToast();
+    const { t, i18n } = useTranslation();
+
+    // Define form schema
+    const formSchema = z.object({
+        username: z.string().min(3, {
+            message: t("username_min_length"),
+        }),
+        email: z.string().email({
+            message: t("invalid_email"),
+        }),
+    });
 
     // React Hook Form setup
     const {
@@ -89,17 +93,27 @@ const OverviewPage = () => {
     // Form submission handler
     const onSubmit = (values: z.infer<typeof formSchema>) => {
         console.log(values);
-        toast("success", "Form submitted successfully!");
+        toast("success", t("form_success"));
         reset(); // Reset form after successful submission
+    };
+
+    const toggleLanguage = () => {
+        i18n.changeLanguage(i18n.language === 'en' ? 'vi' : 'en');
     };
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+            <div className="col-span-full flex justify-end mb-4">
+                <Button onClick={toggleLanguage}>
+                    {t("language_toggle")}
+                </Button>
+            </div>
+
             <Card>
                 <CardHeader>
-                    <CardTitle>Avatar</CardTitle>
+                    <CardTitle>{t("avatar_title")}</CardTitle>
                     <CardDescription>
-                        Displays an image representation of a user or entity.
+                        {t("avatar_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="flex items-center gap-4">
@@ -115,9 +129,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Badge</CardTitle>
+                    <CardTitle>{t("badge_title")}</CardTitle>
                     <CardDescription>
-                        Displays a small piece of information.
+                        {t("badge_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -127,9 +141,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Button</CardTitle>
+                    <CardTitle>{t("button_title")}</CardTitle>
                     <CardDescription>
-                        Displays a button or a link.
+                        {t("button_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -162,9 +176,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Card</CardTitle>
+                    <CardTitle>{t("card_title")}</CardTitle>
                     <CardDescription>
-                        Displays a card with header, content, and footer.
+                        {t("card_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -177,10 +191,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Dialog</CardTitle>
+                    <CardTitle>{t("dialog_title")}</CardTitle>
                     <CardDescription>
-                        A window overlaid on either the primary window or
-                        another dialog window.
+                        {t("dialog_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -234,9 +247,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Input</CardTitle>
+                    <CardTitle>{t("input_title")}</CardTitle>
                     <CardDescription>
-                        Displays a form input field.
+                        {t("input_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -246,22 +259,21 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Label</CardTitle>
+                    <CardTitle>{t("label_title")}</CardTitle>
                     <CardDescription>
-                        Renders an accessible label associated with controls.
+                        {t("label_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Label htmlFor="email">Your email address</Label>
+                    <Label htmlFor="email">{t("email_label")}</Label>
                 </CardContent>
             </Card>
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Popover</CardTitle>
+                    <CardTitle>{t("popover_title")}</CardTitle>
                     <CardDescription>
-                        Displays rich content in a portal, triggered by a
-                        button.
+                        {t("popover_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -287,9 +299,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Scroll Area</CardTitle>
+                    <CardTitle>{t("scroll_area_title")}</CardTitle>
                     <CardDescription>
-                        Visually or semantically separates content.
+                        {t("scroll_area_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -307,9 +319,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Select</CardTitle>
+                    <CardTitle>{t("select_title")}</CardTitle>
                     <CardDescription>
-                        Displays a list of options for the user to pick from.
+                        {t("select_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -337,9 +349,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Separator</CardTitle>
+                    <CardTitle>{t("separator_title")}</CardTitle>
                     <CardDescription>
-                        Visually or semantically separates content.
+                        {t("separator_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -366,9 +378,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Table</CardTitle>
+                    <CardTitle>{t("table_title")}</CardTitle>
                     <CardDescription>
-                        A responsive table component.
+                        {t("table_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -406,10 +418,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Tabs</CardTitle>
+                    <CardTitle>{t("tabs_title")}</CardTitle>
                     <CardDescription>
-                        A set of layered sections of content, known as tab
-                        panels, that are displayed one at a time.
+                        {t("tabs_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -430,9 +441,9 @@ const OverviewPage = () => {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Textarea</CardTitle>
+                    <CardTitle>{t("textarea_title")}</CardTitle>
                     <CardDescription>
-                        Displays a multi-line text input field.
+                        {t("textarea_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -443,10 +454,9 @@ const OverviewPage = () => {
             {/* New Form Card */}
             <Card className="w-full max-w-md col-span-full mx-auto mt-8">
                 <CardHeader>
-                    <CardTitle>Simple Form with React Hook Form</CardTitle>
+                    <CardTitle>{t("simple_form_title")}</CardTitle>
                     <CardDescription>
-                        Demonstrates form handling and validation using React
-                        Hook Form and Zod.
+                        {t("simple_form_description")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -455,7 +465,7 @@ const OverviewPage = () => {
                         className="space-y-4"
                     >
                         <div>
-                            <Label htmlFor="username">Username</Label>
+                            <Label htmlFor="username">{t("username_label")}</Label>
                             <Input
                                 id="username"
                                 type="text"
@@ -471,7 +481,7 @@ const OverviewPage = () => {
                             )}
                         </div>
                         <div>
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email">{t("email_label")}</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -485,7 +495,7 @@ const OverviewPage = () => {
                             )}
                         </div>
                         <Button type="submit" className="w-full">
-                            Submit
+                            {t("submit_button")}
                         </Button>
                     </form>
                 </CardContent>
