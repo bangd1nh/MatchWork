@@ -115,3 +115,62 @@
 .nav-link {
     @apply text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium;
 }
+
+/* ================================================
+   React Big Calendar Dark Mode Styles
+   ================================================ */
+.dark .rbc-calendar {
+    @apply bg-card text-foreground;
+}
+
+.dark .rbc-toolbar {
+    @apply mb-4;
+}
+
+.dark .rbc-toolbar .rbc-toolbar-label {
+    @apply text-2xl font-bold text-foreground;
+}
+
+.dark .rbc-btn-group button {
+    @apply text-foreground bg-secondary hover:bg-accent;
+}
+
+.dark .rbc-header {
+    @apply border-b border-border p-2 text-center font-medium text-muted-foreground;
+}
+
+.dark .rbc-day-bg {
+    @apply border-l border-border;
+}
+
+.dark .rbc-day-bg:first-child {
+    @apply border-l-0;
+}
+
+.dark .rbc-month-row {
+    @apply border-t border-border;
+}
+
+.dark .rbc-off-range-bg {
+    @apply bg-muted/40;
+}
+
+.dark .rbc-today {
+    @apply bg-accent;
+}
+
+.dark .rbc-event {
+    @apply bg-primary text-primary-foreground p-1 rounded-md text-sm;
+}
+
+.dark .rbc-event:focus {
+    @apply outline-none ring-2 ring-ring ring-offset-2;
+}
+
+.dark .rbc-event.rbc-selected {
+    @apply bg-primary/80;
+}
+
+.dark .rbc-show-more {
+    @apply text-primary hover:text-primary/80;
+}
