@@ -22,9 +22,9 @@ import {
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-import { ScheduleForm, ScheduleFormValues } from "./ScheduleForm";
 import { CustomEvent } from "./CustomEvent";
 import { ScheduleRuleList } from "./ScheduleRuleList";
+import { ScheduleForm, ScheduleFormValues } from "./ScheduleForm";
 
 const localizer = momentLocalizer(moment);
 

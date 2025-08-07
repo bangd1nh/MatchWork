@@ -1,6 +1,6 @@
-# React Boilerplate with TypeScript, Vite, Zustand, React Query, and Tailwind CSS
+# Tutor-Student Connection Platform
 
-A modern boilerplate for React projects.
+This project is a boilerplate for a platform that connects tutors and students, providing features for scheduling and managing student's learning.
 
 ## Features
 

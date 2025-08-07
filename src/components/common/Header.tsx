@@ -21,7 +21,7 @@ interface HeaderProps {
 const Header = ({ onMenuClick }: HeaderProps) => {
     const { isAuthenticated, logout, user } = useAuthStore();
     const { theme, toggleTheme } = useTheme();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation(); // Destructure i18n here
     const isMobile = useMediaQuery("(max-width: 767px)"); // Define mobile breakpoint
 
     const getDashboardPath = () => {
@@ -36,6 +36,10 @@ const Header = ({ onMenuClick }: HeaderProps) => {
             default:
                 return "/";
         }
+    };
+
+    const changeLanguage = (lng: string) => {
+        i18n.changeLanguage(lng);
     };
 
     const renderRoleNavItems = () => {
@@ -155,6 +159,25 @@ const Header = ({ onMenuClick }: HeaderProps) => {
                         {t("login")}
                     </Link>
                 )}
+
+                {/* Language Toggle Dropdown */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="icon" className="h-8 w-8 sm:h-9 sm:w-9">
+                            {i18n.language.toUpperCase()}
+                            <ChevronDown className="ml-1 h-4 w-4" />
+                            <span className="sr-only">Change language</span>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => changeLanguage("en")}>
+                            English
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => changeLanguage("vi")}>
+                            Tiếng Việt
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
 
                 <Button
                     variant="outline"

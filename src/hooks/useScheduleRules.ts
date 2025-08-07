@@ -5,8 +5,7 @@ import {
     createScheduleRule,
     updateScheduleRule,
     deleteScheduleRule,
-    UpsertScheduleRule,
-} from "@/lib/api";
+} from "@/api/schedules";
 
 /**
  * Custom hook để quản lý dữ liệu và các hành động liên quan đến các quy tắc lịch hẹn.

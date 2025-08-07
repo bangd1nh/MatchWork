@@ -73,8 +73,8 @@ module.exports = {
                 "slide-in": "slide-in 0.3s ease-out",
             },
             fontFamily: {
-                sans: ['Victor Mono', 'sans-serif'],
-                mono: ['Victor Mono', 'monospace'],
+                sans: ["Montserrat", "sans-serif"],
+                // mono: ["Victor Mono", "monospace"],
             },
         },
     },

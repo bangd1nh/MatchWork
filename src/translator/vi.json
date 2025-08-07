@@ -51,5 +51,13 @@
   "textarea_description": "Hiển thị trường nhập liệu văn bản nhiều dòng.",
   "simple_pie_chart_title": "Biểu đồ tròn đơn giản",
   "simple_line_chart_title": "Biểu đồ đường đơn giản",
-  "simple_bar_chart_title": "Biểu đồ cột đơn giản"
+  "simple_bar_chart_title": "Biểu đồ cột đơn giản",
+  "login_title": "Đăng nhập",
+  "login_description": "Nhập email của bạn bên dưới để đăng nhập vào tài khoản của bạn.",
+  "password_label": "Mật khẩu",
+  "invalid_email_address": "Địa chỉ email không hợp lệ.",
+  "password_min_length": "Mật khẩu phải có ít nhất 6 ký tự.",
+  "login_failed_generic": "Đăng nhập thất bại. Vui lòng kiểm tra thông tin đăng nhập của bạn và thử lại.",
+  "logging_in": "Đang đăng nhập...",
+  "sign_in": "Đăng nhập"
 }

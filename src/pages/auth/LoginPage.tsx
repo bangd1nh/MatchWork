@@ -1,64 +1,103 @@
-import { useAuthStore, Role } from "@/store/useAuthStore";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import { Button } from "@/components/ui/button";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useTranslation } from "react-i18next";
 
 const LoginPage = () => {
-    const login = useAuthStore((state) => state.login);
-    const navigate = useNavigate();
+    const { t } = useTranslation();
 
-    const handleLogin = (role: Role) => {
-        const user = {
-            id: `${Date.now()}`,
-            name: `${
-                role.charAt(0).toUpperCase() + role.slice(1).toLowerCase()
-            } User`,
-            role: role,
-        };
-        login(user);
+    const loginSchema = z.object({
+        email: z.string().email({ message: t("invalid_email_address") }),
+        password: z.string().min(6, { message: t("password_min_length") }),
+    });
 
-        switch (role) {
-            case "ADMIN":
-                navigate("/admin/dashboard");
-                break;
-            case "EMPLOYER":
-                navigate("/employer/dashboard");
-                break;
-            case "JOBSEEKER":
-                navigate("/jobseeker/dashboard");
-                break;
-            default:
-                navigate("/");
-                break;
-        }
+    type LoginFormInputs = z.infer<typeof loginSchema>;
+
+    const { login, isLoading, isError, error } = useAuth();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormInputs>({
+        resolver: zodResolver(loginSchema),
+    });
+
+    const onSubmit = (data: LoginFormInputs) => {
+        login(data);
     };
 
     return (
-        <div className="flex flex-col justify-center items-center h-full">
-            <div className="p-8 bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-sm">
-                <h2 className="text-2xl font-bold mb-6 text-center">
-                    Select a Role to Login
-                </h2>
-                <div className="space-y-4">
-                    <Button
-                        onClick={() => handleLogin("ADMIN")}
-                        className="w-full bg-red-600 hover:bg-red-700"
-                    >
-                        Login as Admin
-                    </Button>
-                    <Button
-                        onClick={() => handleLogin("EMPLOYER")}
-                        className="w-full bg-blue-600 hover:bg-blue-700"
-                    >
-                        Login as Employer
-                    </Button>
-                    <Button
-                        onClick={() => handleLogin("JOBSEEKER")}
-                        className="w-full bg-green-600 hover:bg-green-700"
-                    >
-                        Login as Job Seeker
-                    </Button>
-                </div>
-            </div>
+        <div className="flex items-center justify-center h-[80vh] bg-gray-100 dark:bg-gray-900">
+            <Card className="w-full max-w-sm">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <CardHeader>
+                        <CardTitle className="text-2xl">
+                            {t("login_title")}
+                        </CardTitle>
+                        <CardDescription>
+                            {t("login_description")}
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="grid gap-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="email">{t("email_label")}</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                placeholder="m@example.com"
+                                {...register("email")}
+                            />
+                            {errors.email && (
+                                <p className="text-sm text-red-600">
+                                    {errors.email.message}
+                                </p>
+                            )}
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="password">
+                                {t("password_label")}
+                            </Label>
+                            <Input
+                                id="password"
+                                type="password"
+                                {...register("password")}
+                            />
+                            {errors.password && (
+                                <p className="text-sm text-red-600">
+                                    {errors.password.message}
+                                </p>
+                            )}
+                        </div>
+                        {isError && (
+                            <p className="text-sm text-red-600">
+                                {error?.message || t("login_failed_generic")}
+                            </p>
+                        )}
+                    </CardContent>
+                    <CardFooter>
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? t("logging_in") : t("sign_in")}
+                        </Button>
+                    </CardFooter>
+                </form>
+            </Card>
         </div>
     );
 };
